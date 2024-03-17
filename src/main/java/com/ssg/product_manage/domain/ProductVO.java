@@ -8,7 +8,7 @@ import lombok.*;
 @Builder
 @ToString
 public class ProductVO {
-    private int pno;
+    private long pno;
     private String pname;
     private int price;
     private int quantity;

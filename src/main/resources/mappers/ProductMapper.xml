@@ -1,4 +1,59 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ssg.product_manage.mapper.ProductMapper">
+
+    <select id="insert">
+        insert into product(pname, price, quantity)
+        values (#{pname}, #{price}, #{quantity})
+    </select>
+
+    <select id="selectOne" resultType="com.ssg.product_manage.domain.ProductVO">
+        select *
+        from product
+        where pno = #{pno}
+    </select>
+
+    <delete id="delete">
+        delete
+        from product
+        where pno = #{pno}
+    </delete>
+
+    <update id="update">
+        update product
+        set pname    = #{pname},
+            price    = #{price},
+            quantity = #{quantity}
+        where pno = #{pno}
+    </update>
+
+    <select id="selectList" resultType="com.ssg.product_manage.domain.ProductVO">
+        select * from product
+        <where>
+            <if test="types != null and types.length > 0">
+                <foreach collection="types" item="type" open="(" close=") " separator=" OR ">
+                    <if test="type == 't'.toString()">
+                        pname like concat('%', #{keyword}, '%')
+                    </if>
+                </foreach>
+            </if>
+
+        </where>
+
+        order by pno desc limit #{skip}, #{size}
+    </select>
+
+    <select id="getCount" resultType="int">
+        select count(*)
+        from product
+        <where>
+            <if test="types != null and types.length > 0">
+                <foreach collection="types" item="type" open="(" close=") " separator=" OR ">
+                    <if test="type == 't'.toString()">
+                        pname like concat('%', #{keyword}, '%')
+                    </if>
+                </foreach>
+            </if>
+        </where>
+    </select>
 </mapper>

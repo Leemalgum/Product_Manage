@@ -2,14 +2,18 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+       xmlns:mysql="http://www.springframework.org/schema/context"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans.xsd
 
-http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd "
+>
     <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-        <property name="driverClassName" value="org.mariadb.jdbc.Driver"/>
-        <property name="jdbcUrl" value="jdbc:mariadb://localhost:3307/webdb"/>
+<!--                <property name="driverClassName" value="org.mariadb.jdbc.Driver"/>-->
+<!--                <property name="jdbcUrl" value="jdbc:mariadb://localhost:3307/webdb"/>-->
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/webdb"/>
         <property name="username" value="webuser"/>
         <property name="password" value="webuser"/>
         <property name="dataSourceProperties">
@@ -30,8 +34,10 @@ http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-sprin
         <property name="mapperLocations" value="classpath:/mappers/**/*.xml"></property>
     </bean>
 
+<!--    <bean id="modelMapper" class="org.modelmapper.ModelMapper"/>-->
+
     <context:component-scan base-package="com.ssg.product_manage.config"/>
     <context:component-scan base-package="com.ssg.product_manage.service"/>
-    <mybatis:scan base-package="com.ssg.product_manage.mapper"></mybatis:scan>
+        <mybatis:scan base-package="com.ssg.product_manage.mapper"></mybatis:scan>
 
 </beans>
